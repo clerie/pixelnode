@@ -8,6 +8,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 function onConnection(socket){
+  console.log(socket);
   socket.on('input', function(data) {
     console.log(data);
     var command = data.split(" ");
