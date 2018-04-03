@@ -1,0 +1,9 @@
+{
+  "name": "pixelnode",
+  "version": "0.0.1",
+  "description": "Web based Pixelflut server in node.js and socket.io",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^2.1.0"
+  }
+}
