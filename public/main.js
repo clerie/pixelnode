@@ -6,10 +6,20 @@
   var canvas = document.getElementsByClassName('display')[0];
   var context = canvas.getContext('2d');
 
+  var canvas_size_x = 100;
+  var canvas_size_y = 100;
+
+  socket.on('setting', onSetting);
+
   socket.on('draw', onDraw);
 
   window.addEventListener('resize', onResize, false);
   onResize();
+
+  function onSetting(data) {
+    canvas_size_x = data.canvas.size.x;
+    canvas_size_y = data.canvas.size.y;
+  }
 
 
   function drawLine(x0, y0, x1, y1, color){
@@ -23,15 +33,15 @@
   }
 
   function drawPixel(x, y, color){
-    context.fillStyle = '#' + color;
-    context.fillRect(x - (canvas.width * 0.005),y - (canvas.height * 0.005), canvas.width * 0.01, canvas.height * 0.01);
+    context.fillStyle = color;
+    context.fillRect(x - (canvas.width * (0.5/canvas_size_x)),y - (canvas.height * (0.5/canvas_size_y)), canvas.width * (1/canvas_size_x), canvas.height * (1/canvas_size_y));
   }
 
   function onDraw(data){
     var w = canvas.width;
     var h = canvas.height;
     if (data.type == 'pixel') {
-      drawPixel(data.x * w, data.y * h, data.color);
+      drawPixel((data.x / canvas_size_x) * w, (data.y / canvas_size_y) * h, data.color);
     }
   }
 

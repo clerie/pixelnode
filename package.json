@@ -4,6 +4,7 @@
   "description": "Web based Pixelflut server in node.js and socket.io",
   "dependencies": {
     "express": "^4.15.2",
+    "net": "^1.0.2",
     "socket.io": "^2.1.0"
   }
 }
