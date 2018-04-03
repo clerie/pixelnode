@@ -21,7 +21,7 @@ function onConnection(socket){
         }
       }
     }
-  }
+  });
 }
 
 io.on('connection', onConnection);
