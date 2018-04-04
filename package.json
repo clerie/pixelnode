@@ -5,6 +5,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "net": "^1.0.2",
+    "quick-local-ip": "^1.0.7",
     "socket.io": "^2.1.0"
   }
 }

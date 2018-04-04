@@ -26,3 +26,14 @@ html, body {
   left: 10px;
   bottom: 10px;
 }
+
+.play {
+  z-index: 100;
+  position: absolute;
+  background-color: #00000022;
+  padding: 3px;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  text-align: center;
+}

@@ -3,6 +3,7 @@
 (function() {
 
   var stats = document.getElementsByClassName('stats')[0];
+  var play = document.getElementsByClassName('play')[0];
 
   var socket = io();
 
@@ -22,6 +23,20 @@
   function onSetting(data) {
     canvas_size_x = data.canvas.size.x;
     canvas_size_y = data.canvas.size.y;
+
+    var out = 'Play PixelFlut @ ';
+
+    if (data.network.ip4 != '') {
+      out += 'IP4 ' + data.network.ip4 + ' ';
+    }
+    if (data.network.ip4 != '' && data.network.ip6 != '') {
+      out += '|| ';
+    }
+    if (data.network.ip6 != '') {
+      out += 'IP6 ' + data.network.ip6 + ' ';
+    }
+    out += 'port ' + data.network.port;
+    play.innerHTML = out;
   }
 
 

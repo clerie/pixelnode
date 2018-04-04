@@ -6,6 +6,12 @@ const io = require('socket.io')(http);
 const http_port = process.env.PORT || 61813;
 const net = require('net');
 const input_port = 1337;
+const myip = require('quick-local-ip');
+const ip4 = myip.getLocalIP4();
+const ip6 = myip.getLocalIP6();
+
+console.log(ip4);
+console.log(ip6);
 
 // define canvas
 var canvas_size_x = 100;
@@ -75,13 +81,26 @@ app.use(express.static(__dirname + '/public'));
 // output socket
 io.on('connection', function (socket){
   console.log("[HTTP] new connection");
-  socket.emit('setting', {canvas: {size: {x: canvas_size_x, y: canvas_size_y}}});
+  socket.emit('setting', {
+    canvas: {
+      size: {
+        x: canvas_size_x,
+        y: canvas_size_y
+      }
+    },
+    network: {
+      ip4: ip4,
+      ip6: ip6,
+      port: input_port
+    }
+  });
 });
 
 // input socket
 var server = net.createServer();
 
 server.on('connection', function (server_socket) {
+  console.log(server_socket);
   conn_count++;
   server_socket.setEncoding('utf8');
   console.log('[INPUT] new input');
@@ -117,7 +136,6 @@ server.on('connection', function (server_socket) {
       server_socket.write('STATS px:' + pixel_count_flat + ' conn:' + conn_count_flat + '\n');
     }
   });
-
   server_socket.on('close', function() {
     conn_count--;
   });
