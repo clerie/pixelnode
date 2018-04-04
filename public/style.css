@@ -17,3 +17,12 @@ html, body {
   bottom: 0;
   top: 0;
 }
+
+.stats {
+  z-index: 100;
+  position: absolute;
+  background-color: #00000022;
+  padding: 3px;
+  left: 10px;
+  bottom: 10px;
+}

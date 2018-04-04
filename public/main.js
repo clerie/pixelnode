@@ -2,7 +2,10 @@
 
 (function() {
 
+  var stats = document.getElementsByClassName('stats')[0];
+
   var socket = io();
+
   var canvas = document.getElementsByClassName('display')[0];
   var context = canvas.getContext('2d');
 
@@ -10,8 +13,8 @@
   var canvas_size_y = 100;
 
   socket.on('setting', onSetting);
-
   socket.on('draw', onDraw);
+  socket.on('stats', onStats);
 
   window.addEventListener('resize', onResize, false);
   onResize();
@@ -38,11 +41,16 @@
   }
 
   function onDraw(data){
+    console.log(data);
     var w = canvas.width;
     var h = canvas.height;
     if (data.type == 'pixel') {
       drawPixel((data.x / canvas_size_x) * w, (data.y / canvas_size_y) * h, data.color);
     }
+  }
+
+  function onStats(data) {
+    stats.innerHTML = 'px/s: ' + data.pixel + ' connections: ' + data.connections;
   }
 
   // make the canvas fill its parent
