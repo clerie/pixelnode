@@ -10,9 +10,6 @@ const myip = require('quick-local-ip');
 const ip4 = myip.getLocalIP4();
 const ip6 = myip.getLocalIP6();
 
-console.log(ip4);
-console.log(ip6);
-
 // define canvas
 var canvas_size_x = 100;
 var canvas_size_y = 100;
@@ -100,7 +97,6 @@ io.on('connection', function (socket){
 var server = net.createServer();
 
 server.on('connection', function (server_socket) {
-  console.log(server_socket);
   conn_count++;
   server_socket.setEncoding('utf8');
   console.log('[INPUT] new input');
@@ -112,17 +108,11 @@ server.on('connection', function (server_socket) {
       if (x <= canvas_size_x && y <= canvas_size_y) {
         if (!isNaN(x) && !isNaN(y)) {
           if (command[3] != undefined) {
-            console.log("c is there");
             var color = str_to_color(command[3]);
-            console.log(color);
             if (color !== false) {
-              console.log("c ok");
               io.sockets.emit('draw', {type: 'pixel', x: x, y: y, color: color_to_html(color)});
               pixel_count++;
               color_to_canvas_content(x, y, color);
-            }
-            else {
-              console.log("c not ok");
             }
           }
           server_socket.write('PX ' + x + ' ' + y + ' ' + get_color(x, y) + '\n');
@@ -142,7 +132,7 @@ server.on('connection', function (server_socket) {
 });
 
 // start http
-http.listen(http_port, () => console.log('[HTTP] port: ' + http_port));
+http.listen(http_port, () => console.log('[HTTP] started server at ' + ip4 + ':' + http_port));
 
 // start input socket
-server.listen(input_port, () => console.log('[INPUT] port: ' + input_port));
+server.listen(input_port, () => console.log('[INPUT] started server at ' + ip4 + ':' + input_port));
