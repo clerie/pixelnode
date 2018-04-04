@@ -6,6 +6,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  color: #ffffff;
 }
 
 .display {
@@ -16,12 +17,13 @@ html, body {
   right: 0;
   bottom: 0;
   top: 0;
+  background-color: #000000;
 }
 
 .stats {
   z-index: 100;
   position: absolute;
-  background-color: #00000022;
+  background-color: #333333aa;
   padding: 3px;
   left: 10px;
   bottom: 10px;
@@ -30,7 +32,7 @@ html, body {
 .play {
   z-index: 100;
   position: absolute;
-  background-color: #00000022;
+  background-color: #333333aa;
   padding: 3px;
   left: 10px;
   right: 10px;

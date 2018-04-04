@@ -91,6 +91,7 @@ io.on('connection', function (socket){
       port: input_port
     }
   });
+  socket.emit('drawn', canvas_content);
 });
 
 // input socket
@@ -110,7 +111,7 @@ server.on('connection', function (server_socket) {
           if (command[3] != undefined) {
             var color = str_to_color(command[3]);
             if (color !== false) {
-              io.sockets.emit('draw', {type: 'pixel', x: x, y: y, color: color_to_html(color)});
+              io.sockets.emit('draw', {type: 'pixel', x: x, y: y, color: color});
               pixel_count++;
               color_to_canvas_content(x, y, color);
             }
@@ -122,7 +123,7 @@ server.on('connection', function (server_socket) {
     else if (command[0] == 'SIZE') {
       server_socket.write('SIZE ' + canvas_size_x + ' ' + canvas_size_x + '\n');
     }
-    else if (command[1] == 'STATS') {
+    else if (command[0] == 'STATS') {
       server_socket.write('STATS px:' + pixel_count_flat + ' conn:' + conn_count_flat + '\n');
     }
   });

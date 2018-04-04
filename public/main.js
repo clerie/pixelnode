@@ -14,6 +14,7 @@
   var canvas_size_y = 100;
 
   socket.on('setting', onSetting);
+  socket.on('drawn', onDrawn);
   socket.on('draw', onDraw);
   socket.on('stats', onStats);
 
@@ -51,17 +52,31 @@
   }
 
   function drawPixel(x, y, color){
-    context.fillStyle = color;
+    context.fillStyle = '#' + color;
     context.fillRect(x - (canvas.width * (0.5/canvas_size_x)),y - (canvas.height * (0.5/canvas_size_y)), canvas.width * (1/canvas_size_x), canvas.height * (1/canvas_size_y));
   }
 
   function onDraw(data){
-    console.log(data);
     var w = canvas.width;
     var h = canvas.height;
     if (data.type == 'pixel') {
       drawPixel((data.x / canvas_size_x) * w, (data.y / canvas_size_y) * h, data.color);
     }
+  }
+
+  function onDrawn(data){
+    console.log(data);
+    var w = canvas.width;
+    var h = canvas.height;
+    data.forEach(function (d, x){
+      if (d !== null) {
+        d.forEach(function (c, y) {
+          if (c !== null) {
+            drawPixel((x / canvas_size_x) * w, (y / canvas_size_y) * h, c);
+          }
+        });
+      }
+    });
   }
 
   function onStats(data) {
